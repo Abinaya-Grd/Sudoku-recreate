@@ -1,0 +1,68 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+<title>Explore All</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:#f9f9f9;
+}
+
+.container2{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:20px;
+    padding:40px 60px;
+}
+
+.imgcard{
+    border:solid 2px #ecd3d3;
+    background:#fefdf3;
+    border-radius:5px;
+    padding:15px;
+}
+
+.image2{
+    width:215px;
+    height:120px;
+    object-fit:contain;
+}
+
+.category-name{
+    text-align:center;
+    color:black;
+}
+</style>
+</head>
+
+<body>
+
+<h1 style="padding-left:60px;">Explore by Categories</h1>
+
+<div class="container2">
+
+{% for explore in explore_categories %}
+
+<div class="card3">
+
+    <a href="/subcategory/{{ explore.category.id }}/"
+       style="text-decoration:none">
+
+        <div class="imgcard">
+            <img src="{{ explore.image.url }}" class="image2">
+        </div>
+
+        <h2 class="category-name">{{ explore.name }}</h2>
+
+    </a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Orders</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#f5f5f5;
+    font-family:Arial,sans-serif;
+}
+
+.page-title{
+    text-align:center;
+    color:#c12e35;
+    margin:30px 0;
+}
+
+.orders-container{
+    width:80%;
+    margin:auto;
+}
+
+.order-card{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 0 8px rgba(0,0,0,0.08);
+}
+
+.order-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.order-id{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.status{
+    background:#d4edda;
+    color:#155724;
+    padding:8px 15px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.order-info{
+    color:#666;
+    margin-bottom:15px;
+}
+
+.item-row{
+    padding:12px;
+    border:1px solid #eee;
+    border-radius:10px;
+    margin-bottom:10px;
+    background:#fafafa;
+}
+
+.product-name{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.variant{
+    color:gray;
+    font-size:14px;
+}
+
+.price{
+    color:#c12e35;
+    font-weight:bold;
+}
+
+.total{
+    text-align:right;
+    font-size:22px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.empty-box{
+    width:500px;
+    margin:100px auto;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 10px rgba(0,0,0,0.08);
+}
+
+.shop-btn{
+    margin-top:20px;
+    border:none;
+    background:#c12e35;
+    color:white;
+    padding:14px 40px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 class="page-title">📦 My Orders</h1>
+
+{% if orders %}
+
+<div class="orders-container">
+
+{% for order in orders %}
+
+<div class="order-card">
+
+    <div class="order-header">
+        <div class="order-id">
+            Order #{{ order.id }}
+        </div>
+
+        <div class="status">
+            {{ order.status }}
+        </div>
+    </div>
+
+    <div class="order-info">
+        Date: {{ order.created_at }}
+    </div>
+
+    {% for item in order.items.all %}
+
+    <div class="item-row">
+
+        <div class="product-name">
+            {{ item.product_name }}
+        </div>
+
+        <div class="variant">
+            {{ item.variant_label }}
+        </div>
+
+        <div>
+            Qty : {{ item.quantity }}
+        </div>
+
+        <div class="price">
+            ₹ {{ item.price }}
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <div class="total">
+        Total : ₹{{ order.total_amount }}
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-box">
+
+    <h2>No Orders Yet</h2>
+
+    <p>Looks like you haven't placed any order.</p>
+
+    <a href="/">
+        <button class="shop-btn">
+            Continue Shopping
+        </button>
+    </a>
+
+</div>
+
+{% endif %}
+
+</body>
+</html>

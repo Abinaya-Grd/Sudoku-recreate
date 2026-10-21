@@ -1,0 +1,475 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+<title>Cart</title>
+
+<style>
+body{
+    margin:0;
+    background:#f5f5f5;
+    font-family:Arial, sans-serif;
+}
+
+.cart-main-layout{
+    display:flex;
+    gap:25px;
+    padding:30px 40px;
+}
+
+.cart-left{
+    flex:2;
+}
+
+.cart-right{
+    flex:1;
+}
+
+.white-box{
+    background:white;
+    padding:25px;
+    margin-bottom:18px;
+    border-radius:4px;
+    box-shadow:0 0 3px #ddd;
+    width: 580px;
+}
+
+.cart-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:28px;
+}
+
+.cart-item-left{
+    display:flex;
+    gap:25px;
+    align-items:center;
+}
+
+.cart-img{
+    width:90px;
+    height:90px;
+    object-fit:contain;
+}
+
+.item-name{
+    font-size:22px;
+    margin:0;
+}
+
+.variant{
+    color:gray;
+    margin:6px 0;
+}
+
+.price{
+    font-size:20px;
+    margin:0;
+}
+
+.price del{
+    color:gray;
+    font-size:14px;
+}
+
+.qty-box{
+    width:140px;
+    height:34px;
+    background:#c12e35;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    overflow:hidden;
+}
+
+.qty-box a{
+    width:40px;
+    height:100%;
+    color:white;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.qty-box span{
+    width:40px;
+    height:26px;
+    background:white;
+    color:#c12e35;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.instruction-card{
+    display:flex;
+    gap:20px;
+}
+
+.instruction{
+    border:1px solid #ccc;
+    border-radius:12px;
+    padding:15px 20px;
+    width:230px;
+}
+
+.note-input{
+    width:95%;
+    height:45px;
+    border:1px solid #aaa;
+    border-radius:12px;
+    padding:0 15px;
+    font-size:15px;
+}
+
+.bill-row{
+    display:flex;
+    justify-content:space-between;
+    margin:15px 0;
+    color:#555;
+}
+
+.total-row{
+    font-size:22px;
+    font-weight:bold;
+    color:black;
+}
+
+.tip-buttons button{
+    border:1px solid #ddd;
+    background:white;
+    border-radius:20px;
+    padding:8px 15px;
+    margin-right:8px;
+}
+
+.address-btn{
+    width:100%;
+    height:50px;
+    background:#c12e35;
+    color:white;
+    border:none;
+    border-radius:25px;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.empty-cart{
+    height:70vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.empty-img{
+    width:110px;
+    height:110px;
+    object-fit:contain;
+}
+
+.browse-btn{
+    background:#c12e35;
+    color:white;
+    text-decoration:none;
+    padding:14px 90px;
+    border-radius:30px;
+    margin-top:20px;
+}
+.coupon{
+    text-decoration:none;
+    font-size: 17px;
+}
+.white-box1{
+    background:white;
+    padding-left:5px;
+    display: flex;
+    gap: 10px;
+    margin-bottom:18px;
+    border-radius:4px;
+    box-shadow:0 0 3px #ddd;
+    height:50px;
+    width: 624px;
+}
+.coupon-img{
+    height:42px;
+}
+.tip-thanks{
+    color:green;
+    font-weight:bold;
+    display:none;
+}
+
+.tip-area{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.tip-btn{
+    border:1px solid #ddd;
+    background:white;
+    border-radius:20px;
+    padding:8px 15px;
+    margin-right:8px;
+    cursor:pointer;
+}
+
+.tip-btn.active-tip{
+    background:#fff6b7;
+    border:1px solid #c12e35;
+    font-weight:bold;
+}
+
+.cancel-tip{
+    border:none;
+    background:white;
+    color:#c12e35;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.tipped-box{
+    background:#fff6b7;
+    padding:10px 18px;
+    border-radius:6px;
+    text-align:center;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+{% if cart_items %}
+
+<div class="cart-main-layout">
+
+    <div class="cart-left">
+
+        <div class="white-box">
+            {% for item in cart_items %}
+
+            <div class="cart-item">
+
+                <div class="cart-item-left">
+                    <img src="{{ item.product.image.url }}" class="cart-img">
+
+                    <div>
+                        <h2 class="item-name">{{ item.product.name }}</h2>
+                        <p class="variant">{{ item.variant_label }}</p>
+
+                        <p class="price">
+                            ₹ {{ item.discount_price }}
+                            <del>₹{{ item.price }}</del>
+                        </p>
+                    </div>
+                </div>
+
+             <div class="qty-box">
+
+<a href="/decrease-cart/{{ item.id }}/">
+−
+</a>
+
+<span>{{ item.quantity }}</span>
+
+<a href="/add-cart/{{ item.product.id }}/{{ item.variant.id }}/">
++
+</a>
+
+</div>
+        </div>
+
+            {% endfor %}
+        </div>
+
+        <div class="white-box">
+            <h2>Delivery Instructions</h2>
+            <p>Delivery partner will be notified</p>
+
+            <div class="instruction-card">
+                <div class="instruction">
+                    <b>No Contact Delivery</b>
+                    <p>Delivery partner will leave your order at your door</p>
+                </div>
+
+                <div class="instruction">
+                    <b>Do Not Ring The Bell</b>
+                    <p>Delivery partner will not ring the bell</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="white-box">
+            <h2>Additional Note</h2>
+            <input class="note-input" placeholder="Add your special notes on your order">
+        </div>
+
+    </div>
+
+    <div class="cart-right">
+
+        <div class="white-box1">
+            <img src="{% static 'images/coupon.webp' %}"  class="coupon-img">
+            <h3 class="coupon">View Coupons & Offers ›</h3>
+        </div>
+
+        <div class="white-box">
+            <h2>Delivery Partner Tip</h2>
+            <p>This amount goes to your delivery partner.</p>
+
+            <p class="tip-thanks" id="tipThanks">We ThankYou For Your Generosity!</p>
+
+<div class="tip-area">
+            <div class="tip-buttons">
+                <button class="tip-btn" id="tip10" onclick="selectTip(10)">🪙₹10</button>
+                <button class="tip-btn" id="tip20" onclick="selectTip(20)">🪙₹20</button>
+                <button class="tip-btn" id="tip30" onclick="selectTip(30)">🪙₹30</button>
+                <button class="cancel-tip" onclick="selectTip(0)">Cancel</button>
+            </div>
+            <div class="tipped-box" id="tippedBox">
+            ₹<span id="tippedValue">10</span><br>
+            <b>Tipped</b>
+        </div>
+    </div>
+</div>
+    <div class="white-box">
+    <h2>
+        Bill Summary 
+        <span style="background:#c12e35;color:white;padding:8px;border-radius:10px;font-size:14px;">
+            Saved ₹{{ cart.savings }}
+        </span>
+    </h2>
+
+    <div class="bill-row">
+        <span>Item Total & GST</span>
+        <span>₹ {{ cart.subtotal_with_gst }}</span>
+    </div>
+
+    <div class="bill-row">
+        <span>Handling charge</span>
+        <span>₹ {{ cart.handling_charges }}</span>
+    </div>
+
+    <div class="bill-row">
+        <span>Delivery Fee</span>
+        <span>₹ {{ cart.delivery_fee }}</span>
+    </div>
+
+    <div class="bill-row">
+        <span>Delivery Tip</span>
+        <span id="deliveryTipAmount">₹ {{ cart.delivery_tip }}</span>
+    </div>
+    <hr>
+    <div class="bill-row total-row">
+        <span>Total Bill</span>
+        <span  id="totalBillAmount">₹ {{ cart.total_bill }}</span>
+    </div>
+</div>
+        <div class="white-box">
+            <h2 style="color:#c12e35;text-align:center;">Enter your Delivery Address</h2>
+            <a href="/address/">
+    <button class="address-btn">
+        Add Address
+    </button>
+</a>
+            <br><br>
+            <a href="/payment/" style="text-decoration:none;">
+    <button class="address-btn">
+        Proceed To Payment
+    </button>
+</a>
+        </div>
+    </div>
+</div>
+<br><br>
+
+
+
+{% else %}
+
+<div class="empty-cart">
+    <img src="{% static 'images/empty-cart.png' %}" class="empty-img">
+
+    <h2>Your cart is empty</h2>
+
+    <a href="/explore-all/" class="browse-btn">
+        Browse Now
+    </a>
+</div>
+
+{% endif %}
+<script>
+function getKey(productId, variantId){
+    return productId + "_" + variantId;
+}
+
+function decreaseLocalCart(productId, variantId){
+    let cartData = JSON.parse(localStorage.getItem("cartData")) || {};
+    let cartItemsData = JSON.parse(localStorage.getItem("cartItemsData")) || {};
+
+    let key = getKey(productId, variantId);
+
+    if(cartData[key]){
+        cartData[key] -= 1;
+
+        if(cartData[key] <= 0){
+            delete cartData[key];
+            delete cartItemsData[key];
+        }
+
+        localStorage.setItem("cartData", JSON.stringify(cartData));
+        localStorage.setItem("cartItemsData", JSON.stringify(cartItemsData));
+    }
+}
+
+function increaseLocalCart(productId, variantId){
+    let cartData = JSON.parse(localStorage.getItem("cartData")) || {};
+    let key = getKey(productId, variantId);
+
+    cartData[key] = (cartData[key] || 0) + 1;
+
+    localStorage.setItem("cartData", JSON.stringify(cartData));
+}
+let baseTotal = parseInt("{{ cart.total_bill }}");
+let oldTip = parseInt("{{ cart.delivery_tip }}") || 0; 
+
+function selectTip(tip){
+
+    document.querySelectorAll(".tip-btn").forEach(btn=>{
+        btn.classList.remove("active-tip");
+    });
+
+    let finalTotal = baseTotal - oldTip + tip;
+
+    document.getElementById("deliveryTipAmount").innerText = "₹ " + tip;
+    document.getElementById("totalBillAmount").innerText = "₹ " + finalTotal;
+
+    if(tip > 0){
+        document.getElementById("tip" + tip).classList.add("active-tip");
+
+        document.getElementById("tipThanks").style.display = "block";
+        document.getElementById("tippedBox").style.display = "block";
+        document.getElementById("tippedValue").innerText = tip;
+    }else{
+        document.getElementById("tipThanks").style.display = "none";
+        document.getElementById("tippedBox").style.display = "none";
+    }
+    fetch("/save-tip/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        tip: tip
+    })
+});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,621 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>{{ product.name }}</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f9f9f9;
+      }
+
+      .details-container {
+        display: grid;
+        grid-template-columns: 45% 55%;
+        gap: 40px;
+        padding: 60px 90px;
+      }
+
+      .product-big-img {
+        width: 100%;
+        height: 420px;
+        object-fit: contain;
+      }
+
+      .details-right h1 {
+        font-size: 28px;
+      }
+
+      .variant-row {
+        border: 1px solid #e07b7b;
+        padding: 12px 15px;
+        margin: 13px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+      }
+
+      .variant-row p {
+        margin: 0;
+        font-size: 16px;
+      }
+
+      .variant-row h3 {
+        margin: 4px 0;
+      }
+
+      .variant-row span {
+        font-size: 14px;
+        color: gray;
+        text-decoration: line-through;
+      }
+
+      .add-btn {
+        width: 120px;
+        height: 34px;
+        border: 1px solid #c9272e;
+        color: #c9272e;
+        background: white;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .detail-qty-box {
+        width: 120px;
+        height: 34px;
+        background: #c12e35;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        overflow: hidden;
+      }
+
+      .detail-qty-box button {
+        width: 35px;
+        height: 100%;
+        border: none;
+        background: none;
+        color: white;
+        font-size: 22px;
+        cursor: pointer;
+      }
+
+      .detail-qty-box span {
+        width: 40px;
+        height: 25px;
+        background: white;
+        color: #c12e35;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .info-box {
+        margin-top: 15px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .info-header {
+        padding: 18px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .info-content {
+        display: none;
+        padding: 18px;
+        border-top: 1px solid #eee;
+        line-height: 1.6;
+      }
+
+      .cart-sidebar {
+        position: fixed;
+        top: 85px;
+        right: -390px;
+        width: 310px;
+        height: 350px;
+        background: white;
+        z-index: 5000;
+        border-radius: 18px;
+        transition: 0.4s;
+        padding: 24px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .cart-items-scroll {
+        flex: 1;
+        overflow-y: auto;
+        margin-top: 15px;
+        padding-left: 5px;
+        scroll-behavior: smooth;
+      }
+      .cart-sidebar.active {
+        right: 18px;
+      }
+
+      .cart-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-top button {
+        width: 38px;
+        height: 38px;
+        border: none;
+        border-radius: 50%;
+        background: #c12e35;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .cart-product {
+        display: flex;
+        gap: 15px;
+      }
+
+      .cart-product img {
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+      }
+      .cart-items-scroll::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      .cart-items-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .cart-items-scroll::-webkit-scrollbar-thumb {
+        background: #d3d3d3;
+        border-radius: 10px;
+      }
+
+      .cart-items-scroll::-webkit-scrollbar-thumb:hover {
+        background: #b5b5b5;
+      }
+
+      .go-cart-btn {
+        width: 100%;
+        height: 44px;
+        border: 1px solid #c9272e;
+        color: #c9272e;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        margin-top: 25px;
+      }
+ .similar-section{
+    margin:45px 0 30px 100px;
+}
+
+.similar-title{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.similar-row{
+    display:grid;
+    grid-template-columns:repeat(5, 200px);
+    gap:12px;
+}
+
+.similar-card{
+    width:180px;
+    height:250px;
+    background:white;
+    border-radius:18px;
+    padding:10px;
+    position:relative;
+}
+
+.similar-offer{
+    position:absolute;
+    top:0;
+    left:0;
+    background:#be3138;
+    color:white;
+    padding:5px 10px;
+    border-radius:18px 0 18px 0;
+    font-size:14px;
+}
+
+.similar-product-img{
+    width:100%;
+    height:100px;
+    object-fit:contain;
+    margin-top:25px;
+}
+
+.similar-product-name{
+    font-size:15px;
+    margin-top:12px;
+}
+
+.similar-variant{
+    font-size:13px;
+    color:#888;
+}
+
+.similar-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.similar-price{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.similar-price span{
+    font-size:12px;
+    color:gray;
+    text-decoration:line-through;
+}
+
+.similar-add-btn{
+    width:90px;
+    height:30px;
+    border:1px solid #c12e35;
+    color:#c12e35;
+    background:white;
+    border-radius:20px;
+}
+
+.similar-qty-box{
+    width:90px;
+    height:30px;
+    background:#c12e35;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    overflow:hidden;
+}
+
+.similar-qty-box button{
+    width:28px;
+    height:100%;
+    border:none;
+    background:none;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.similar-qty-box span{
+    width:30px;
+    height:22px;
+    background:white;
+    color:#c12e35;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="details-container">
+      <div>
+        <img src="{{ product.image.url }}" class="product-big-img" />
+      </div>
+
+      <div class="details-right">
+        <h1>{{ product.name }}</h1>
+
+        {% for v in variants %}
+        <div class="variant-row">
+          <div>
+            <p>{{ v.label }}</p>
+            <h3>
+              ₹ {{ v.discount_price }} {% if v.price %}
+              <span>₹{{ v.price }}</span>
+              {% endif %}
+            </h3>
+          </div>
+
+          <div>
+            <button
+              class="add-btn"
+              id="detailAddBtn{{ v.id }}"
+              onclick="addDetailCart('{{ product.id }}', '{{ v.id }}', '{{ product.name }}', '{{ product.image.url }}', '{{ v.discount_price }}', '{{ v.label }}')"
+            >
+              Add
+            </button>
+
+            <div
+              class="detail-qty-box"
+              id="detailQtyBox{{ v.id }}"
+              style="display: none"
+            >
+              <button
+                onclick="detailDecreaseQty('{{ product.id }}','{{ v.id }}')"
+              >
+                −
+              </button>
+              <span id="detailQty{{ v.id }}">1</span>
+              <button
+                onclick="detailIncreaseQty('{{ product.id }}','{{ v.id }}','{{ product.name }}','{{ product.image.url }}','{{ v.discount_price }}','{{ v.label }}')"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="info-box">
+          <div class="info-header" onclick="toggleInfo()">
+            <span>Product Information</span>
+            <span>⌄</span>
+          </div>
+
+          <div class="info-content" id="productInfo">
+            <p><b>About:</b> {{ product.about }}</p>
+            <p><b>Health Benefits:</b> {{ product.health_benefits }}</p>
+            <p><b>Nutrition:</b> {{ product.nutrition }}</p>
+            <p><b>Origin:</b> {{ product.origin }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-top">
+        <h2>Cart Items</h2>
+        <button onclick="closeCart()">×</button>
+      </div>
+
+      <div id="cartItems" class="cart-items-scroll"></div>
+
+      <a href="/cart/" class="go-cart-btn">Go To Cart →</a>
+    </div>
+    <div class="similar-section">
+
+    <h2 class="similar-title">Similar Products</h2>
+
+    <div class="similar-row">
+
+        {% for p in similar_products %}
+
+        <div class="similar-card">
+
+            <div class="similar-offer">
+                {% if p.offer %}
+                    {{ p.offer }}
+                {% else %}
+                    17% OFF
+                {% endif %}
+            </div>
+
+            <a href="/product-details/{{ p.id }}/"
+               style="text-decoration:none;color:black;">
+
+                <img src="{{ p.image.url }}" class="similar-product-img">
+
+                <p class="similar-product-name">{{ p.name }}</p>
+
+            </a>
+
+            {% with first=p.variants.first %}
+
+            <p class="similar-variant">{{ first.label }}</p>
+
+            <div class="similar-bottom">
+
+                <p class="similar-price">
+                    ₹ {{ first.discount_price }}
+                    <span>₹{{ first.price }}</span>
+                </p>
+
+                <button
+                    class="similar-add-btn"
+                    id="similarAddBtn{{ p.id }}"
+                    data-variant-id="{{ first.id }}"
+                    onclick="similarAddProduct('{{ p.id }}','{{ first.id }}','{{ p.name }}','{{ p.image.url }}','{{ first.discount_price }}','{{ first.label }}')">
+                    Add
+                </button>
+
+                <div class="similar-qty-box"
+                     id="similarQtyBox{{ p.id }}"
+                     style="display:none;">
+
+                    <button onclick="similarDecreaseQty('{{ p.id }}','{{ first.id }}')">
+                        −
+                    </button>
+
+                    <span id="similarQty{{ p.id }}">1</span>
+
+                    <button onclick="similarIncreaseQty('{{ p.id }}','{{ first.id }}','{{ p.name }}','{{ p.image.url }}','{{ first.discount_price }}','{{ first.label }}')">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            {% endwith %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+ <script>
+let cartData = JSON.parse(localStorage.getItem("cartData")) || {};
+let cartItemsData = JSON.parse(localStorage.getItem("cartItemsData")) || {};
+
+function key(productId, variantId){
+    return productId + "_" + variantId;
+}
+
+function saveCart(){
+    localStorage.setItem("cartData", JSON.stringify(cartData));
+    localStorage.setItem("cartItemsData", JSON.stringify(cartItemsData));
+}
+
+function addDetailCart(productId, variantId, name, image, price, label){
+    let k = key(productId, variantId);
+
+    fetch(`/add-cart/${productId}/${variantId}/`)
+    .then(() => {
+        cartData[k] = (cartData[k] || 0) + 1;
+
+        cartItemsData[k] = {
+            productId,
+            variantId,
+            name,
+            image,
+            price,
+            label
+        };
+
+        saveCart();
+        updateDetailButtons();
+        updateSimilarButtons();
+        renderCartPopup();
+        openCart();
+    });
+}
+
+function detailIncreaseQty(productId, variantId, name, image, price, label){
+    addDetailCart(productId, variantId, name, image, price, label);
+}
+
+function detailDecreaseQty(productId, variantId){
+    let k = key(productId, variantId);
+
+    if(cartData[k]){
+        cartData[k] -= 1;
+
+        if(cartData[k] <= 0){
+            delete cartData[k];
+            delete cartItemsData[k];
+        }
+
+        saveCart();
+        updateDetailButtons();
+        updateSimilarButtons();
+        renderCartPopup();
+    }
+}
+
+function updateDetailButtons(){
+    document.querySelectorAll("[id^='detailAddBtn']").forEach(btn => {
+        let variantId = btn.id.replace("detailAddBtn", "");
+        let productId = "{{ product.id }}";
+        let k = key(productId, variantId);
+
+        let qty = cartData[k] || 0;
+        let qtyBox = document.getElementById("detailQtyBox" + variantId);
+        let qtyText = document.getElementById("detailQty" + variantId);
+
+        if(qty > 0){
+            btn.style.display = "none";
+            qtyBox.style.display = "flex";
+            qtyText.innerText = qty;
+        }else{
+            btn.style.display = "block";
+            qtyBox.style.display = "none";
+            qtyText.innerText = "1";
+        }
+    });
+}
+
+function renderCartPopup(){
+    let cartItems = document.getElementById("cartItems");
+    cartItems.innerHTML = "";
+
+    for(let k in cartData){
+        let qty = cartData[k];
+        let item = cartItemsData[k];
+
+        if(item){
+            cartItems.innerHTML += `
+                <div class="cart-product">
+                    <img src="${item.image}">
+                    <div>
+                        <h3>${item.name}</h3>
+                        <p>${item.label} × ${qty}</p>
+                        <p>₹ ${item.price}</p>
+                    </div>
+                </div>
+            `;
+        }
+    }
+}
+
+function openCart(){
+    document.getElementById("cartSidebar").classList.add("active");
+}
+
+function closeCart(){
+    document.getElementById("cartSidebar").classList.remove("active");
+}
+
+function toggleInfo(){
+    let box = document.getElementById("productInfo");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+}
+function similarAddProduct(productId, variantId, name, image, price, label){
+    addDetailCart(productId, variantId, name, image, price, label);
+}
+
+function similarIncreaseQty(productId, variantId, name, image, price, label){
+    addDetailCart(productId, variantId, name, image, price, label);
+}
+
+function similarDecreaseQty(productId, variantId){
+    detailDecreaseQty(productId, variantId);
+}
+window.addEventListener("pageshow", function(){
+    updateDetailButtons();
+    updateSimilarButtons();
+    renderCartPopup();
+});
+function updateSimilarButtons(){
+    document.querySelectorAll("[id^='similarAddBtn']").forEach(btn => {
+        let productId = btn.id.replace("similarAddBtn", "");
+        let variantId = btn.dataset.variantId;
+        let k = key(productId, variantId);
+
+        let qty = cartData[k] || 0;
+        let qtyBox = document.getElementById("similarQtyBox" + productId);
+        let qtyText = document.getElementById("similarQty" + productId);
+
+        if(qty > 0){
+            btn.style.display = "none";
+            qtyBox.style.display = "flex";
+            qtyText.innerText = qty;
+        }else{
+            btn.style.display = "block";
+            qtyBox.style.display = "none";
+            qtyText.innerText = "1";
+        }
+    });
+}
+</script>
+
+  </body>
+</html>

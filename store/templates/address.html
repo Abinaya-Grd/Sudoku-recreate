@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Address</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f5f5f5;
+        }
+
+        .address-box{
+            width:500px;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 5px #ccc;
+        }
+
+        h2{
+            text-align:center;
+            color:#c12e35;
+        }
+
+        input{
+            width:100%;
+            height:45px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            padding-left:10px;
+        }
+
+        textarea{
+            width:100%;
+            height:80px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            padding:10px;
+            margin-bottom:15px;
+        }
+
+        button{
+            width:100%;
+            height:50px;
+            background:#c12e35;
+            color:white;
+            border:none;
+            border-radius:25px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="address-box">
+
+    <h2>Add Delivery Address</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            required
+        >
+
+        <input
+            type="text"
+            name="mobile"
+            placeholder="Mobile Number"
+            required
+        >
+
+        <textarea
+            name="house"
+            placeholder="House No / Flat / Building"
+            required
+        ></textarea>
+
+        <input
+            type="text"
+            name="area"
+            placeholder="Area / Street"
+            required
+        >
+
+        <input
+            type="text"
+            name="city"
+            placeholder="City"
+            required
+        >
+
+        <input
+            type="text"
+            name="pincode"
+            placeholder="Pincode"
+            required
+        >
+
+        <button type="submit">
+            Save Address
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

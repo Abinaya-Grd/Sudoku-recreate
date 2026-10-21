@@ -1,0 +1,799 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Mycommerce</title>
+
+    <style>
+      body {
+        font-family: cursive;
+        background-color: #f9f9f9;
+        margin: 0;
+      }
+
+      .navbar {
+        background-image: linear-gradient(to bottom, #f3e008 70%, #f9f9f9);
+        color: black;
+        display: flex;
+        align-items: center;
+        padding-left: 60px;
+        padding-right: 60px;
+        height: 110px;
+        gap: 30px;
+      }
+
+      .logo {
+        width: 260px;
+        object-fit: contain;
+      }
+
+      .nav-line {
+        width: 3px;
+        height: 48px;
+        background: black;
+      }
+
+      .location-box {
+        display: flex;
+        align-items: center;
+        gap: 55px;
+        font-size: 13px;
+        cursor: pointer;
+        white-space: nowrap;
+        font-family: sans-serif;
+        padding-top: 10px;
+        font-weight: bold;
+      }
+
+      .arrow {
+        font-size: 10px;
+      }
+
+      .search-box {
+        width: 850px;
+        height: 40px;
+        background: white;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        padding: 0 28px;
+        margin-left: 10px;
+      }
+
+      .search-box input {
+        width: 80%;
+        border: none;
+        outline: none;
+        font-size: 18px;
+      }
+
+      .nav-icons {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+        margin-left: auto;
+      }
+
+      .nav-item {
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        font-size: 15px;
+      }
+
+      .nav-item span {
+        display: block;
+        font-size: 32px;
+        line-height: 25px;
+      }
+
+      .heading {
+        font-size: 29px;
+        text-align: center;
+        font-family: auto;
+        font-weight: bold;
+      }
+
+      .container {
+        display: flex;
+        gap: 50px;
+        margin-left: 260px;
+      }
+
+      .card {
+        border-radius: 15px;
+        border: solid white;
+        background: white;
+        width: 275px;
+        height: 180px;
+      }
+
+      .image {
+        width: 272px;
+        height: 170px;
+        border-radius: 20px 20px 0 0;
+      }
+
+      .category-name {
+        text-decoration: none;
+        color: black;
+        font-size: medium;
+        font-family: auto;
+        text-align: center;
+        background: white;
+        height: 27px;
+      }
+
+      .banner-swiper {
+        width: 90%;
+        height: 500px;
+        margin-top: 30px;
+        overflow: hidden;
+      }
+
+      .banner-swiper .swiper-slide {
+        width: 520px !important;
+        height: 480px;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .banner-swiper .swiper-slide img {
+        width: 500px;
+        height: 490px;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+
+      .swiper-pagination-bullet-active {
+        width: 22px;
+        border-radius: 20px;
+        background: #f3e008;
+      }
+
+      .banner-type-section {
+        display: flex;
+        gap: 25px;
+        margin: 40px 65px;
+      }
+
+      .banner-type-card {
+        height: 176px;
+        border-radius: 12px;
+        overflow: hidden;
+        display: block;
+      }
+
+      .banner-type-card img {
+        height: 176px;
+        object-fit: contain;
+      }
+
+      .heading1 {
+        font-size: 21px;
+        font-family: auto;
+        padding-left: 65px;
+        font-weight: bold;
+      }
+
+      .seeall {
+        display: flex;
+        flex-direction: row-reverse;
+        text-decoration: none;
+        color: #bd4d52;
+        font-weight: bold;
+        margin-right: 70px;
+      }
+
+      .container2 {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin-left: 60px;
+      }
+
+      .image2 {
+        border-radius: 20px 20px 0 0;
+        object-fit: contain;
+        width: 215px;
+        height: 120px;
+        background-color: #fefdf3;
+      }
+
+      .imgcard {
+        border: solid 2px #ecd3d3;
+        background-color: #fefdf3;
+        border-radius: 5px;
+        padding: 15px;
+      }
+
+   
+      .home-section {
+        margin: 45px 0 30px 100px;
+      }
+
+      .section-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 18px;
+      }
+
+      .home-product-row {
+        display: grid;
+        grid-template-columns: repeat(6, 200px);
+        gap: 12px;
+      }
+
+      .home-product-card {
+        width: 180px;
+        height: 250px;
+        background: white;
+        border-radius: 18px;
+        padding: 10px;
+        position: relative;
+      }
+
+      .home-offer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #be3138;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 18px 0 18px 0;
+        font-size: 14px;
+      }
+
+      .home-product-img {
+        width: 100%;
+        height: 100px;
+        object-fit: contain;
+        margin-top: 25px;
+      }
+
+      .home-product-name {
+        font-size: 15px;
+        margin-top: 12px;
+      }
+
+      .home-variant {
+        font-size: 13px;
+        color: #888;
+      }
+
+      .home-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .home-price {
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      .home-price span {
+        font-size: 12px;
+        color: gray;
+        text-decoration: line-through;
+      }
+
+      .home-add-btn {
+        width: 90px;
+        height: 30px;
+        border: 1px solid #c12e35;
+        color: #c12e35;
+        background: white;
+        border-radius: 20px;
+      }
+
+
+      .modal-bg {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .location-modal {
+        width: 450px;
+        min-height: 450px;
+        background: white;
+        border-radius: 18px;
+        padding: 35px;
+        position: relative;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 22px;
+        right: 22px;
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 50%;
+        background: #be3941;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+      }
+
+      .search-address {
+        width: 90%;
+        height: 56px;
+        border: 1px solid #ddd;
+        border-radius: 35px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        margin-top: 45px;
+      }
+
+      .search-address input {
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        padding-left: 15px;
+      }
+
+      .gps-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        margin-top: 38px;
+        cursor: pointer;
+        color: green;
+      }
+
+      .gps-content h3 {
+        margin: 0;
+        color: #2fb64b;
+        font-size: 28px;
+      }
+
+      .gps-content p {
+        color: #2fb64b;
+        font-size: 22px;
+      }
+
+      .result-item {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+        font-size: 15px;
+      }
+      .home-qty-box{
+    width:90px;
+    height:30px;
+    background:#c12e35;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    overflow:hidden;
+}
+
+.home-qty-box button{
+    width:28px;
+    height:100%;
+    border:none;
+    background:none;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.home-qty-box span{
+    width:30px;
+    height:22px;
+    background:white;
+    color:#c12e35;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <img src="{% static 'images/sodakku.png' %}" class="logo" />
+
+      <div class="nav-line"></div>
+
+      <div class="location-box" onclick="openLocationModal()">
+        <span id="locationText">No Location Found</span>
+        <span class="arrow">▼</span>
+      </div>
+
+      <div class="search-box">
+        <img
+          width="20"
+          height="20"
+          src="https://img.icons8.com/ios-filled/50/search--v1.png"
+        />
+        <input type="text" placeholder="Search For Products..." />
+      </div>
+
+      <div class="nav-icons">
+
+    <a href="/login/" class="nav-item">
+        <span>
+            <img width="32" height="32"
+                 src="https://img.icons8.com/windows/32/user-male-circle.png" />
+        </span>
+        Login
+    </a>
+
+    <a href="/my-orders/" class="nav-item">
+        <span>📦</span>
+        My Orders
+    </a>
+
+    <a href="/cart/" class="nav-item">
+        <span>
+            <img width="32" height="32"
+                 src="https://img.icons8.com/material-outlined/24/shopping-cart--v1.png" />
+        </span>
+        Cart
+    </a>
+
+</div>
+    </nav>
+
+    <div class="modal-bg" id="locationModal">
+      <div class="location-modal">
+        <button class="close-btn" onclick="closeLocationModal()">×</button>
+
+        <div class="search-address">
+          <span><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input
+            type="text"
+            id="addressInput"
+            placeholder="Search a new address"
+            onkeyup="searchAddress()"
+          />
+        </div>
+
+        <div class="gps-box" onclick="getCurrentLocation()">
+          <span><i class="fa-solid fa-location-crosshairs"></i></span>
+          <div class="gps-content">
+            <h3>Current Location</h3>
+            <p>Using GPS</p>
+          </div>
+        </div>
+
+        <div id="searchResults"></div>
+      </div>
+    </div>
+
+    <h1 class="heading">Grab & Go essentials for you!</h1>
+
+    <div class="container">
+      {% for item in grab_items %}
+      <div class="card">
+        <a
+          href="/subcategory/{{ item.category.id }}/"
+          style="text-decoration: none"
+        >
+          <img src="{{ item.image.url }}" class="image" />
+          <h2 class="category-name">{{ item.name }}</h2>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <br /><br />
+
+    <div class="swiper banner-swiper">
+      <div class="swiper-wrapper">
+        {% for b in banners %}
+        <div class="swiper-slide">
+          <a href="/slider-products/{{ b.id }}/">
+            <img src="{{ b.image.url }}" />
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="banner-type-section">
+      {% for bl in banner_lists %}
+      <a href="/banner-products/{{ bl.id }}/" class="banner-type-card">
+        <img src="{{ bl.image.url }}" />
+      </a>
+      {% endfor %}
+    </div>
+
+    <h1 class="heading1">Explore by categories</h1>
+
+    <a href="/explore-all/" class="seeall">See All ></a>
+
+    <div class="container2">
+      {% for explore in explore_categories %}
+      <div class="card3">
+        <a
+          href="/subcategory/{{ explore.category.id }}/"
+          style="text-decoration: none"
+        >
+          <div class="imgcard">
+            <img src="{{ explore.image.url }}" class="image2" />
+          </div>
+          <h2 class="category-name">{{ explore.name }}</h2>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% for section in home_sections %}
+
+    <div class="home-section">
+      <h2 class="section-title">{{ section.display_name }}</h2>
+
+      <div class="home-product-row">
+        {% for p in section.products.all %}
+
+        <div class="home-product-card">
+          <div class="home-offer">
+            {% if p.offer %} {{ p.offer }} {% else %} 17% OFF {% endif %}
+          </div>
+
+          <a
+            href="/product-details/{{ p.id }}/"
+            style="text-decoration: none; color: black"
+          >
+            <img src="{{ p.image.url }}" class="home-product-img" />
+            <p class="home-product-name">{{ p.name }}</p>
+          </a>
+
+          {% with first=p.variants.first %}
+
+          <p class="home-variant">{{ first.label }}</p>
+
+          <div class="home-bottom">
+            <p class="home-price">
+              ₹ {{ first.discount_price }}
+              <span>₹{{ first.price }}</span>
+            </p>
+
+            <button
+              class="home-add-btn"
+              id="homeAddBtn{{ p.id }}"
+              data-variant-id="{{ first.id }}"
+              onclick="homeAddProduct('{{ p.id }}','{{ first.id }}','{{ p.name }}','{{ p.image.url }}','{{ first.discount_price }}','{{ first.label }}')"
+            >
+              Add
+            </button>
+
+            <div
+              class="home-qty-box"
+              id="homeQtyBox{{ p.id }}"
+              style="display: none"
+            >
+              <button onclick="homeDecreaseQty('{{ p.id }}','{{ first.id }}')">−</button>
+              <span id="homeQty{{ p.id }}">1</span>
+              <button onclick="homeIncreaseQty('{{ p.id }}','{{ first.id }}','{{ p.name }}','{{ p.image.url }}','{{ first.discount_price }}','{{ first.label }}')">+</button>
+            </div>
+          </div>
+
+          {% endwith %}
+        </div>
+
+        {% endfor %}
+      </div>
+    </div>
+
+    {% endfor %}
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+      const bannerSwiper = new Swiper(".banner-swiper", {
+        loop: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        spaceBetween: 40,
+        speed: 650,
+        autoplay: {
+          delay: 2200,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
+
+    <script>
+      function openLocationModal() {
+        document.getElementById("locationModal").style.display = "flex";
+      }
+
+      function closeLocationModal() {
+        document.getElementById("locationModal").style.display = "none";
+      }
+
+      function getCurrentLocation() {
+        document.getElementById("locationText").innerText = "Detecting...";
+
+        if (!navigator.geolocation) {
+          document.getElementById("locationText").innerText =
+            "GPS Not Supported";
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          successLocation,
+          errorLocation,
+        );
+      }
+
+      function successLocation(position) {
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+
+        fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`,
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            let address = data.address || {};
+
+            let area =
+              address.suburb ||
+              address.neighbourhood ||
+              address.city ||
+              address.town ||
+              address.village ||
+              address.county ||
+              data.display_name ||
+              "Location Found";
+
+            document.getElementById("locationText").innerText = area;
+            closeLocationModal();
+          })
+          .catch(() => {
+            document.getElementById("locationText").innerText =
+              "Location Error";
+          });
+      }
+
+      function errorLocation() {
+        alert("Please allow location permission.");
+        document.getElementById("locationText").innerText = "No Location Found";
+      }
+
+      function searchAddress() {
+        let query = document.getElementById("addressInput").value;
+
+        if (query.length < 3) {
+          document.getElementById("searchResults").innerHTML = "";
+          return;
+        }
+
+        fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${query}`,
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            let output = "";
+
+            data.slice(0, 5).forEach((place) => {
+              output += `
+                <div class="result-item"
+                     onclick="selectAddress('${place.display_name.replace(/'/g, "")}')">
+                    ${place.display_name}
+                </div>
+            `;
+            });
+
+            document.getElementById("searchResults").innerHTML = output;
+          });
+      }
+
+      function selectAddress(address) {
+        document.getElementById("locationText").innerText = address;
+        closeLocationModal();
+      }
+    </script>
+    <script>
+let cartData = JSON.parse(localStorage.getItem("cartData")) || {};
+let cartItemsData = JSON.parse(localStorage.getItem("cartItemsData")) || {};
+
+function key(productId, variantId){
+    return productId + "_" + variantId;
+}
+
+function saveCart(){
+    localStorage.setItem("cartData", JSON.stringify(cartData));
+    localStorage.setItem("cartItemsData", JSON.stringify(cartItemsData));
+}
+
+function updateAllButtons(){
+    document.querySelectorAll("[id^='homeAddBtn']").forEach(btn => {
+        let productId = btn.id.replace("homeAddBtn", "");
+        let variantId = btn.dataset.variantId;
+        let k = key(productId, variantId);
+
+        let qty = cartData[k] || 0;
+        let qtyBox = document.getElementById("homeQtyBox" + productId);
+        let qtyText = document.getElementById("homeQty" + productId);
+
+        if(addBtnExists(btn, qtyBox, qtyText)){
+            if(qty > 0){
+                btn.style.display = "none";
+                qtyBox.style.display = "flex";
+                qtyText.innerText = qty;
+            }else{
+                btn.style.display = "block";
+                qtyBox.style.display = "none";
+                qtyText.innerText = "1";
+            }
+        }
+    });
+}
+
+function addBtnExists(btn, qtyBox, qtyText){
+    return btn && qtyBox && qtyText;
+}
+
+function homeAddProduct(productId, variantId, name, image, price, label){
+    let k = key(productId, variantId);
+
+    fetch(`/add-cart/${productId}/${variantId}/`)
+    .then(() => {
+        cartData[k] = (cartData[k] || 0) + 1;
+
+        cartItemsData[k] = {
+            productId: productId,
+            variantId: variantId,
+            name: name,
+            image: image,
+            price: price,
+            label: label
+        };
+
+        saveCart();
+        updateAllButtons();
+    });
+}
+
+function homeIncreaseQty(productId, variantId, name, image, price, label){
+    homeAddProduct(productId, variantId, name, image, price, label);
+}
+
+function homeDecreaseQty(productId, variantId){
+    let k = key(productId, variantId);
+
+    if(cartData[k]){
+        cartData[k] -= 1;
+
+        if(cartData[k] <= 0){
+            delete cartData[k];
+            delete cartItemsData[k];
+        }
+
+        saveCart();
+        updateAllButtons();
+    }
+}
+
+window.addEventListener("pageshow", updateAllButtons);
+</script>
+  </body>
+</html>

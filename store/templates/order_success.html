@@ -1,0 +1,76 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Mycommerce</title>
+<style>
+body{
+    background:#f5f5f5;
+    font-family:Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.success-card{
+    width:500px;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
+}
+
+.success-icon{
+    font-size:70px;
+}
+
+.success-title{
+    color:#28a745;
+    margin-top:15px;
+    font-size:30px;
+}
+
+.success-text{
+    color:#666;
+    margin-top:15px;
+}
+
+.shop-btn{
+    margin-top:25px;
+    width:250px;
+    height:50px;
+    border:none;
+    background:#c12e35;
+    color:white;
+    border-radius:30px;
+    font-size:16px;
+    cursor:pointer;
+}
+</style>
+<body>
+<div class="success-card">
+
+    <div class="success-icon">
+        🎉
+    </div>
+
+    <h1 class="success-title">
+        Order Placed Successfully
+    </h1>
+
+    <p class="success-text">
+        Thank you for shopping with us.
+        Your order has been confirmed.
+    </p>
+
+    <a href="/">
+        <button class="shop-btn">
+            Continue Shopping
+        </button>
+    </a>
+
+</div>
+</body>
+</html>
